@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+.jumbotron {
+    background: #00796B !important;
+    box-shadow: -6px 21px 5px -6px rgba(0,0,0,0.42);
+-webkit-box-shadow: -6px 21px 5px -6px rgba(0,0,0,0.42);
+-moz-box-shadow: -6px 21px 5px -6px rgba(0,0,0,0.42);
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+#taskip{
+    text-align: center;
+    height: 50px;
+    width: 300px;
+    border-radius: 5px;
+    outline-color: blue;
+    border: none;
+    border-bottom: 2px solid lightgrey;
+}
+    </style>
+</head>
+<body>
+    <main id="app">
+        <div class="jumbotron bg-primary text-light">
+            <div class="container">
+                <b>
+                    <h1 class="display-4">
+                        TodoApp
+                    </h1>
+                    <p class="lead">
+                        Keep track of your daily tasks with ease
+                    </p>
+                </b>
+            </div>
+</div>
+    <br>
+    <br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-4">
+            <input type="text" id="taskip" v-model="todoItem"
+            @keydown.enter="InserItem" placeholder="Enter Task Here">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Task List</h3>
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>mark as completed</th>
+                    <th>Remove</th>
+                </thead>
+                <tbody>
+                    <tr v-for="task , index in todoItems" v-bind:key="task">
+                        <td>{{task.id}}</td>
+                        <td>
+                            <div v-if="!task.editing" @click="taskEdit(task)" v-bind:class="{completed: task.isCompleted}">
+                                {{task.name}}
+                            </div>
+                            <input v-else type="text" v-model="task.name" @keydown.enter="editCompleted(task)" @blur="editCompleted(task)">
+                            
+                         </td>
+                        <td><input v-model="task.isCompleted" type="checkbox"></td>
+                        <td><button @click="remove(index)" class="button btn-sm btn-danger">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
